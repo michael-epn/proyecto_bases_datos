@@ -26,7 +26,7 @@ CREATE TABLE proveedores (
 CREATE TABLE insumos (
     id_insumo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    unidad_medida VARCHAR(20) NOT NULL, -- Ej: kg, litros, unidad
+    unidad_medida VARCHAR(20) NOT NULL,
     stock_actual DECIMAL(10,2) DEFAULT 0 CHECK (stock_actual >= 0),
     costo_unitario DECIMAL(10,2) DEFAULT 0 CHECK (costo_unitario >= 0)
 );
@@ -51,7 +51,7 @@ CREATE TABLE compras_cabecera (
     id_compra INT AUTO_INCREMENT PRIMARY KEY,
     fecha_compra DATETIME DEFAULT CURRENT_TIMESTAMP,
     id_proveedor INT NOT NULL,
-    id_usuario INT NOT NULL, -- Empleado que recibió la carga
+    id_usuario INT NOT NULL,
     CONSTRAINT fk_compra_prov FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor),
     CONSTRAINT fk_compra_usu FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
@@ -69,7 +69,7 @@ CREATE TABLE detalle_compras (
 CREATE TABLE ventas_cabecera (
     id_venta INT AUTO_INCREMENT PRIMARY KEY,
     fecha_venta DATETIME DEFAULT CURRENT_TIMESTAMP,
-    id_usuario INT NOT NULL, -- Vendedor
+    id_usuario INT NOT NULL,
     total_venta DECIMAL(10,2) DEFAULT 0,
     CONSTRAINT fk_venta_usu FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
