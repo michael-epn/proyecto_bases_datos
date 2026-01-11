@@ -29,5 +29,5 @@ INSERT INTO recetas (id_producto, id_insumo, cantidad_requerida) VALUES
 INSERT INTO ventas_cabecera (id_usuario, total_venta) VALUES (2, 2.75);
 
 INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario) VALUES 
-(1, 2, 5, 0.25), -- 5 * 0.25 = 1.25
-(1, 3, 1, 1.50); -- 1 * 1.50 = 1.50  (Total 2.75)
+(1, 2, 5, 0.25),
+(1, 3, 1, 1.50);
