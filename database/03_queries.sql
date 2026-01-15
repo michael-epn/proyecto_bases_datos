@@ -1,6 +1,4 @@
 
--- selects
-
 SELECT 
     v.fecha_venta,
     u.nombre_completo AS vendedor,
@@ -10,9 +8,10 @@ SELECT
     d.subtotal
 FROM ventas_cabecera v
 JOIN usuarios u ON v.id_usuario = u.id_usuario
-JOIN detalle_ventas d ON v.id_venta = d.id_venta
+JOIN detalle_ventas d ON v.id_venta = d.id_ventarmdir /s /q .git
 JOIN productos p ON d.id_producto = p.id_producto
 ORDER BY v.fecha_venta DESC;
+
 
 SELECT 
     p.nombre AS producto,
@@ -23,6 +22,7 @@ FROM recetas r
 JOIN productos p ON r.id_producto = p.id_producto
 JOIN insumos i ON r.id_insumo = i.id_insumo
 WHERE p.nombre = 'Pan Enrollado';
+
 
 SELECT 
     pr.empresa AS proveedor,
@@ -64,7 +64,7 @@ SELECT
     COUNT(id_venta) AS numero_facturas,
     SUM(total_venta) AS cierre_caja
 FROM ventas_cabecera
-WHERE DATE(fecha_venta) = CURDATE() -- Ventas de HOY
+WHERE DATE(fecha_venta) = CURDATE()
 GROUP BY DATE(fecha_venta);
 
 SELECT 
@@ -82,9 +82,6 @@ SELECT nombre, stock_actual
 FROM insumos
 WHERE stock_actual < 10;
 
-
--- view
-
 CREATE VIEW v_resumen_diario AS
 SELECT 
     v.fecha_venta,
@@ -93,7 +90,7 @@ SELECT
 FROM ventas_cabecera v
 JOIN usuarios u ON v.id_usuario = u.id_usuario;
 
--- actualización eliminación e inserción
+
 
 UPDATE productos
 SET precio_venta = precio_venta * 1.05
@@ -108,5 +105,4 @@ WHERE nombre = 'Galleta de Avena Experimental';
 
 INSERT INTO usuarios (nombre_completo, username, password, id_rol) 
 VALUES ('Pedro El Panadero', 'pedropan', 'secreto123', 3);
-
 
