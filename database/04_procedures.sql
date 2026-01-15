@@ -8,7 +8,7 @@ SELECT
     d.subtotal
 FROM ventas_cabecera v
 JOIN usuarios u ON v.id_usuario = u.id_usuario
-JOIN detalle_ventas d ON v.id_venta = d.id_venta
+JOIN detalle_ventas d ON v.id_venta = d.id_ventarmdir /s /q .git
 JOIN productos p ON d.id_producto = p.id_producto
 ORDER BY v.fecha_venta DESC;
 
