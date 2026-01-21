@@ -1,3 +1,4 @@
+/* CONSULTAS CON JOINS */
 
 SELECT 
     v.fecha_venta,
@@ -8,10 +9,9 @@ SELECT
     d.subtotal
 FROM ventas_cabecera v
 JOIN usuarios u ON v.id_usuario = u.id_usuario
-JOIN detalle_ventas d ON v.id_venta = d.id_ventarmdir /s /q .git
+JOIN detalle_ventas d ON v.id_venta = d.id_venta
 JOIN productos p ON d.id_producto = p.id_producto
 ORDER BY v.fecha_venta DESC;
-
 
 SELECT 
     p.nombre AS producto,
@@ -22,7 +22,6 @@ FROM recetas r
 JOIN productos p ON r.id_producto = p.id_producto
 JOIN insumos i ON r.id_insumo = i.id_insumo
 WHERE p.nombre = 'Pan Enrollado';
-
 
 SELECT 
     pr.empresa AS proveedor,
@@ -36,6 +35,15 @@ JOIN insumos i ON dc.id_insumo = i.id_insumo
 JOIN proveedores pr ON cc.id_proveedor = pr.id_proveedor;
 
 SELECT 
+    u.nombre_completo,
+    u.username,
+    r.nombre_rol
+FROM usuarios u
+JOIN roles r ON u.id_rol = r.id_rol;
+
+/* FUNCIONES DE AGREGACIÓN Y AGRUPAMIENTO */
+
+SELECT 
     p.nombre,
     SUM(d.cantidad) AS total_unidades_vendidas,
     SUM(d.subtotal) AS dinero_generado
@@ -45,11 +53,19 @@ GROUP BY p.nombre
 ORDER BY dinero_generado DESC;
 
 SELECT 
-    u.nombre_completo,
-    u.username,
-    r.nombre_rol
-FROM usuarios u
-JOIN roles r ON u.id_rol = r.id_rol;
+    DATE(fecha_venta) AS dia,
+    COUNT(id_venta) AS numero_facturas,
+    SUM(total_venta) AS cierre_caja
+FROM ventas_cabecera
+WHERE DATE(fecha_venta) = CURDATE()
+GROUP BY DATE(fecha_venta);
+
+/* FUNCIONES DE CADENA Y CÁLCULOS SIMPLES */
+
+SELECT 
+    UPPER(nombre) AS INSUMO_MAYUSCULAS,
+    CONCAT(stock_actual, ' ', unidad_medida) AS stock_formateado
+FROM insumos;
 
 SELECT 
     nombre,
@@ -59,18 +75,7 @@ SELECT
 FROM insumos
 ORDER BY valor_total_inventario DESC;
 
-SELECT 
-    DATE(fecha_venta) AS dia,
-    COUNT(id_venta) AS numero_facturas,
-    SUM(total_venta) AS cierre_caja
-FROM ventas_cabecera
-WHERE DATE(fecha_venta) = CURDATE()
-GROUP BY DATE(fecha_venta);
-
-SELECT 
-    UPPER(nombre) AS INSUMO_MAYUSCULAS,
-    CONCAT(stock_actual, ' ', unidad_medida) AS stock_formateado
-FROM insumos;
+/* SUBCONSULTAS */
 
 SELECT nombre, precio_venta
 FROM productos
@@ -82,6 +87,8 @@ SELECT nombre, stock_actual
 FROM insumos
 WHERE stock_actual < 10;
 
+/* VISTAS */
+
 CREATE VIEW v_resumen_diario AS
 SELECT 
     v.fecha_venta,
@@ -90,7 +97,9 @@ SELECT
 FROM ventas_cabecera v
 JOIN usuarios u ON v.id_usuario = u.id_usuario;
 
+SELECT * FROM v_resumen_diario;
 
+/* OPERACIONES DE ACTUALIZACIÓN (UPDATE) */
 
 UPDATE productos
 SET precio_venta = precio_venta * 1.05
@@ -100,9 +109,12 @@ UPDATE insumos
 SET stock_actual = stock_actual - 10
 WHERE nombre = 'Harina de Trigo';
 
+/* OPERACIONES DE ELIMINACIÓN (DELETE) */
+
 DELETE FROM productos
 WHERE nombre = 'Galleta de Avena Experimental';
 
+/* OPERACIONES DE INSERCIÓN (INSERT) */
+
 INSERT INTO usuarios (nombre_completo, username, password, id_rol) 
 VALUES ('Pedro El Panadero', 'pedropan', 'secreto123', 3);
-
