@@ -45,7 +45,7 @@ END //
 
 DELIMITER ;
 
-/* VIEW */
+/* VISTA */
 
 CREATE VIEW v_info_usuarios_publica AS
 SELECT 
