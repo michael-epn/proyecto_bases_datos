@@ -13,3 +13,7 @@ el backup no se agrega aqui porque ya es algo externo
 IMPORTANTE
 se recomienda usar myqsl para ejecutar los archivos
 
+
+*Enlace al Video de YouTube*
+
+https://youtu.be/y9TxUO5fuXQ
